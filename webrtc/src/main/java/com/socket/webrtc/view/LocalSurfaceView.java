@@ -1,8 +1,8 @@
-package com.socket.webrtc;
+package com.socket.webrtc.view;
 
-import static com.socket.webrtc.Constants.BACK;
-import static com.socket.webrtc.Constants.FRONT;
-import static com.socket.webrtc.Constants.currentCameraType;
+import static com.socket.webrtc.Configs.BACK;
+import static com.socket.webrtc.Configs.FRONT;
+import static com.socket.webrtc.Configs.currentCameraType;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +12,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
+
+import com.socket.webrtc.video.EncodePushLiveH264;
+import com.socket.webrtc.socket.SocketCallback;
+import com.socket.webrtc.socket.SocketLive;
 
 import java.io.IOException;
 

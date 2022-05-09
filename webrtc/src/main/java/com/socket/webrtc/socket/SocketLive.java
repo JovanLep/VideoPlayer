@@ -1,7 +1,9 @@
-package com.socket.webrtc;
+package com.socket.webrtc.socket;
 
 import android.text.TextUtils;
-import android.util.Log;
+
+import com.socket.webrtc.App;
+import com.socket.webrtc.Configs;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.client.WebSocketClient;
@@ -12,8 +14,6 @@ import org.java_websocket.server.WebSocketServer;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.ByteBuffer;
-
-import static com.socket.webrtc.Constants.TAG;
 
 //音视频通话客户端
 public class SocketLive {
@@ -32,24 +32,24 @@ public class SocketLive {
     private WebSocket webSocket;
 
     public void start() {
-        if (type.equals(Constants.TYPE_CALL)) {
+        if (type.equals(Configs.TYPE_CALL)) {
             callStart();
-        } else if (type.equals(Constants.TYPE_RECEIVE)) {
+        } else if (type.equals(Configs.TYPE_RECEIVE)) {
             receivedStart();
         }
     }
 
     public void close() {
-        if (type.equals(Constants.TYPE_CALL)) {
+        if (type.equals(Configs.TYPE_CALL)) {
             callClose();
-        } else if (type.equals(Constants.TYPE_RECEIVE)) {
+        } else if (type.equals(Configs.TYPE_RECEIVE)) {
             receiveClose();
         }
     }
 
     public synchronized void sendData(byte[] bytes, int streamType) {
         byte[] newBuf = new byte[bytes.length + 1];
-        if (streamType == Constants.STREAM_VIDEO) {
+        if (streamType == Configs.STREAM_VIDEO) {
             newBuf[0] = 1;
         } else {
             newBuf[0] = 0;
@@ -57,14 +57,14 @@ public class SocketLive {
         //接收端 1
         System.arraycopy(bytes, 0, newBuf, 1, bytes.length);
 
-        if (type.equals(Constants.TYPE_CALL) && webSocket != null && webSocket.isOpen()) {
+        if (type.equals(Configs.TYPE_CALL) && webSocket != null && webSocket.isOpen()) {
             webSocket.send(newBuf);
-        } else if (type.equals(Constants.TYPE_RECEIVE) && myWebSocketClient != null && (myWebSocketClient.isOpen())) {
+        } else if (type.equals(Configs.TYPE_RECEIVE) && myWebSocketClient != null && (myWebSocketClient.isOpen())) {
             myWebSocketClient.send(newBuf);
         }
     }
 
-    private final WebSocketServer webSocketServer = new WebSocketServer(new InetSocketAddress(Constants.PORT)) {
+    private final WebSocketServer webSocketServer = new WebSocketServer(new InetSocketAddress(Configs.PORT)) {
         @Override
         public void onOpen(WebSocket conn, ClientHandshake handshake) {
             SocketLive.this.webSocket = conn;
@@ -129,7 +129,7 @@ public class SocketLive {
     private void receivedStart() {
         if (TextUtils.isEmpty(App.getApp().ipAddress)) return;
         try {
-            String str = "ws://" + App.getApp().ipAddress + ":" + Constants.PORT;
+            String str = "ws://" + App.getApp().ipAddress + ":" + Configs.PORT;
             URI url = new URI(str);
             myWebSocketClient = new MyWebSocketClient(url);
             myWebSocketClient.connect();

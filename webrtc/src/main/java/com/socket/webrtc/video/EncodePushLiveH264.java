@@ -1,11 +1,16 @@
-package com.socket.webrtc;
+package com.socket.webrtc.video;
 
-import static com.socket.webrtc.YuvUtils.nv21ToNv12;
-import static com.socket.webrtc.Constants.outTimes;
+import static com.socket.webrtc.utils.YuvUtils.nv21ToNv12;
+import static com.socket.webrtc.Configs.outTimes;
 
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
+
+import com.socket.webrtc.Configs;
+import com.socket.webrtc.socket.SocketCallback;
+import com.socket.webrtc.socket.SocketLive;
+import com.socket.webrtc.utils.YuvUtils;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -92,8 +97,12 @@ public class EncodePushLiveH264 {
     private void dealFrame(ByteBuffer bb, MediaCodec.BufferInfo bufferInfo) {
 //00 00  00 01
 //00 00 01
-        //  67    0   1 1    0  0 1 11
-        //  1f    0   0 0    1  1 1 11
+        //  67    0   1 1    0  0 1 1 1
+        //  65    0   1 1    0  0 1 0 0
+        //  1f    0   0 0    1  1 1 1 1
+        //与运算  &
+        // 0x7    0   0 0    0  0 1 1 1
+        // 0x5    0   0 0    0  0 1 0 0
         int offset = 4;
         if (bb.get(2) == 0x01) {
             offset = 3;
@@ -113,12 +122,12 @@ public class EncodePushLiveH264 {
             System.arraycopy(sps_pps_buf, 0, newBuf, 0, sps_pps_buf.length);
             System.arraycopy(bytes, 0, newBuf, sps_pps_buf.length, bytes.length);
 //            编码层   推送出去
-            socketLive.sendData(newBuf, Constants.STREAM_VIDEO);
+            socketLive.sendData(newBuf, Configs.STREAM_VIDEO);
 
         } else {
             final byte[] bytes = new byte[bufferInfo.size];
             bb.get(bytes);
-            this.socketLive.sendData(bytes, Constants.STREAM_VIDEO);
+            this.socketLive.sendData(bytes, Configs.STREAM_VIDEO);
         }
     }
 }

@@ -1,22 +1,25 @@
-package com.socket.webrtc;
+package com.socket.webrtc.ui;
 
-import static com.socket.webrtc.Constants.TYPE_CALL;
-import static com.socket.webrtc.Constants.TYPE_RECEIVE;
+import static com.socket.webrtc.Configs.TYPE_CALL;
+import static com.socket.webrtc.Configs.TYPE_RECEIVE;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.socket.webrtc.audio.AudioRecodeLive;
+import com.socket.webrtc.Configs;
+import com.socket.webrtc.video.DecodePlayerLiveH264;
+import com.socket.webrtc.view.LocalSurfaceView;
+import com.socket.webrtc.R;
+import com.socket.webrtc.socket.SocketCallback;
 
 import java.io.IOException;
 
@@ -45,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements SocketCallback {
     }
 
     private void initView() {
-        //上下镜像翻转
         calledUsers.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
@@ -69,12 +71,12 @@ public class MainActivity extends AppCompatActivity implements SocketCallback {
     @Override
     public void callBack(byte[] data) {
 
-        if (data[0] == Constants.STREAM_VIDEO) {
+        if (data[0] == Configs.STREAM_VIDEO) {
             // 视频
             if (decodecPlayerLiveH264 != null) {
                 decodecPlayerLiveH264.videoCallBack(data);
             }
-        } else if (data[0] == Constants.STREAM_AUDIO) {
+        } else if (data[0] == Configs.STREAM_AUDIO) {
             // 音频
             if (audioRecodeLive != null) {
                 audioRecodeLive.doPlay(data);

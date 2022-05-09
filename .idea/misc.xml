@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/YSP/VideoPlayer/webrtc/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.248" />
+        <entry key="..\:/YSP/VideoPlayer/webrtc/src/main/res/drawable/ic_launcher_background.xml" value="0.248" />
+        <entry key="..\:/YSP/VideoPlayer/webrtc/src/main/res/layout/activity_welcome.xml" value="0.3015625" />
+        <entry key="..\:/YSP/VideoPlayer/webrtc/src/main/res/layout/item_ip_address.xml" value="1.615625" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

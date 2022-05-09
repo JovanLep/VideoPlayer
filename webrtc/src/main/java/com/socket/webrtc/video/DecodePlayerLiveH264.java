@@ -1,8 +1,8 @@
-package com.socket.webrtc;
+package com.socket.webrtc.video;
 
-import static com.socket.webrtc.Constants.width;
-import static com.socket.webrtc.Constants.height;
-import static com.socket.webrtc.Constants.outTimes;
+import static com.socket.webrtc.Configs.width;
+import static com.socket.webrtc.Configs.height;
+import static com.socket.webrtc.Configs.outTimes;
 
 import android.media.MediaCodec;
 import android.media.MediaFormat;

@@ -2,7 +2,7 @@ package com.socket.webrtc;
 
 import android.media.AudioFormat;
 
-public class Constants {
+public class Configs {
 
     public static final int STREAM_AUDIO = 0;
     public static final int STREAM_VIDEO = 1;

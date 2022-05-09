@@ -1,6 +1,8 @@
-package com.socket.webrtc;
+package com.socket.webrtc.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
@@ -8,22 +10,42 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.socket.webrtc.App;
+import com.socket.webrtc.Configs;
+import com.socket.webrtc.R;
+import com.socket.webrtc.adapter.IpAddressAdapter;
+
+import java.util.Arrays;
+import java.util.List;
+
 public class WelcomeActivity extends AppCompatActivity {
+
+    private EditText edtAddress;
+    private RecyclerView recOnlineIp;
+    private Button btWebrtcJoin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
+        initView();
         checkPermission();
+        initEvents();
+    }
 
-        EditText edtAddress = findViewById(R.id.edt_address);
 
+    private void initView() {
+        edtAddress = findViewById(R.id.edt_address);
+        recOnlineIp = findViewById(R.id.rec_online_ip);
+        btWebrtcJoin = findViewById(R.id.bt_webrtc_join);
+    }
+
+    private void initEvents() {
+        //-------------------音视频 通话-----------------------
         findViewById(R.id.bt_webrtc_call).setOnClickListener(view -> {
             String ip = edtAddress.getText().toString();
             if (TextUtils.isEmpty(ip.trim())) {
@@ -32,17 +54,22 @@ public class WelcomeActivity extends AppCompatActivity {
             }
             App.getApp().ipAddress = ip.trim();
             Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-            intent.putExtra("userType", Constants.TYPE_CALL);
+            intent.putExtra("userType", Configs.TYPE_CALL);
             startActivity(intent);
         });
 
         findViewById(R.id.bt_webrtc_receive).setOnClickListener(view -> {
             Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-            intent.putExtra("userType", Constants.TYPE_RECEIVE);
+            intent.putExtra("userType", Configs.TYPE_RECEIVE);
             startActivity(intent);
         });
-    }
 
+        //-------------------音视频 会议-----------------------
+        List<String> ipList = Arrays.asList("172.16.7.110", "172.16.7.111", "172.16.7.112", "172.16.7.113");
+        recOnlineIp.setLayoutManager(new LinearLayoutManager(this));
+        IpAddressAdapter adapter=new IpAddressAdapter(this ,ipList);
+        recOnlineIp.setAdapter(adapter);
+    }
 
     public boolean checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M

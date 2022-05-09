@@ -1,9 +1,9 @@
-package com.socket.webrtc;
+package com.socket.webrtc.audio;
 
-import static com.socket.webrtc.Constants.CHANNEL_CONFIG_OUT;
-import static com.socket.webrtc.Constants.SAMPLE_RATE_INHZ;
-import static com.socket.webrtc.Constants.CHANNEL_CONFIG;
-import static com.socket.webrtc.Constants.AUDIO_FORMAT;
+import static com.socket.webrtc.Configs.CHANNEL_CONFIG_OUT;
+import static com.socket.webrtc.Configs.SAMPLE_RATE_INHZ;
+import static com.socket.webrtc.Configs.CHANNEL_CONFIG;
+import static com.socket.webrtc.Configs.AUDIO_FORMAT;
 
 import android.Manifest;
 import android.content.Context;
@@ -15,6 +15,9 @@ import android.media.MediaRecorder;
 import android.os.Handler;
 import android.os.HandlerThread;
 import androidx.core.app.ActivityCompat;
+
+import com.socket.webrtc.Configs;
+import com.socket.webrtc.socket.SocketLive;
 
 public class AudioRecodeLive {
 
@@ -58,7 +61,7 @@ public class AudioRecodeLive {
         workHandler.post(() -> {
             while (isRecording) {
                 audioRecord.read(data, 0, minBufferSize);
-                socketLive.sendData(data, Constants.STREAM_AUDIO);
+                socketLive.sendData(data, Configs.STREAM_AUDIO);
             }
         });
     }
