@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e5e5e5"
+    android:orientation="vertical"
+    tools:context=".WelcomeActivity">
+
+
+    <RelativeLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/conner_bg_white"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_webrtc_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="音视频通话"
+            tools:ignore="HardcodedText" />
+
+
+        <LinearLayout
+            android:id="@+id/layout_input"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/tv_webrtc_tip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="主叫端IP:"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/edt_address"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入主叫手机的ip地址"
+                android:text="172.16.7.109"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_webrtc_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_input"
+            android:layout_marginTop="20dp"
+            android:text="我是主叫端"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/bt_webrtc_receive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_input"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:text="我是被叫端"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+</LinearLayout>
