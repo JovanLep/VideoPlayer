@@ -8,11 +8,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import com.socket.webrtc.Configs;
 import com.socket.webrtc.video.EncodePushLiveH264;
 import com.socket.webrtc.socket.SocketCallback;
 import com.socket.webrtc.socket.SocketLive;
@@ -42,6 +44,7 @@ public class LocalSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
     @Override
     public void onPreviewFrame(byte[] bytes, Camera camera) {
+        Log.e(Configs.TAG, "onPreviewFrame: ");
         if (encodePushLiveH264 != null) {
             encodePushLiveH264.encodeFrame(currentCameraType == FRONT, bytes);
         }

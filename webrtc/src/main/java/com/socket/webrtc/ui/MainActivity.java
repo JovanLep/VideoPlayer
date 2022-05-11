@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements SocketCallback {
     @Override
     public void callBack(byte[] data) {
 
+//        Log.e(Configs.TAG, "callBack: " + data[0]);
         if (data[0] == Configs.STREAM_VIDEO) {
             // 视频
             if (decodecPlayerLiveH264 != null) {
@@ -87,12 +89,11 @@ public class MainActivity extends AppCompatActivity implements SocketCallback {
     //为了不产生回音、、
     public void connect(View view) {
         if (userType.equals(TYPE_CALL)) {
-            callMe.startCaptrue(TYPE_CALL, this);
             tip.setText("主叫");
         } else {
-            callMe.startCaptrue(TYPE_RECEIVE, this);
             tip.setText("被叫");
         }
+        callMe.startCaptrue(userType, this);
         audioRecodeLive = new AudioRecodeLive(callMe.getSocketLive());
         audioRecodeLive.initPlay(this);
         audioRecodeLive.startRecode(this);

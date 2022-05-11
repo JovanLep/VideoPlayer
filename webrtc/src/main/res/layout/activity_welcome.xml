@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context=".ui.WelcomeActivity">
 
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/tv_ip"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <RelativeLayout
         android:layout_width="320dp"

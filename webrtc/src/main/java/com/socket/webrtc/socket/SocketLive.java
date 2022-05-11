@@ -127,9 +127,8 @@ public class SocketLive {
     }
 
     private void receivedStart() {
-        if (TextUtils.isEmpty(App.getApp().ipAddress)) return;
         try {
-            String str = "ws://" + App.getApp().ipAddress + ":" + Configs.PORT;
+            String str = "ws://172.16.7.109:" + Configs.PORT;
             URI url = new URI(str);
             myWebSocketClient = new MyWebSocketClient(url);
             myWebSocketClient.connect();

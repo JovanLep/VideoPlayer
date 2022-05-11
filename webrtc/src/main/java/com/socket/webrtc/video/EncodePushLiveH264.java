@@ -6,6 +6,7 @@ import static com.socket.webrtc.Configs.outTimes;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
+import android.util.Log;
 
 import com.socket.webrtc.Configs;
 import com.socket.webrtc.socket.SocketCallback;
@@ -84,6 +85,7 @@ public class EncodePushLiveH264 {
         int outputIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, outTimes);
         if (outputIndex >= 0) {
             ByteBuffer outputBuffer = mediaCodec.getOutputBuffer(outputIndex);
+            Log.e(Configs.TAG, "encodeFrame: 输出视频");
             dealFrame(Objects.requireNonNull(outputBuffer), bufferInfo);
             mediaCodec.releaseOutputBuffer(outputIndex, false);
         }
@@ -122,11 +124,13 @@ public class EncodePushLiveH264 {
             System.arraycopy(sps_pps_buf, 0, newBuf, 0, sps_pps_buf.length);
             System.arraycopy(bytes, 0, newBuf, sps_pps_buf.length, bytes.length);
 //            编码层   推送出去
+            Log.e(Configs.TAG, "dealFrame1: 发送视频");
             socketLive.sendData(newBuf, Configs.STREAM_VIDEO);
 
         } else {
             final byte[] bytes = new byte[bufferInfo.size];
             bb.get(bytes);
+            Log.e(Configs.TAG, "dealFrame2: 发送视频");
             this.socketLive.sendData(bytes, Configs.STREAM_VIDEO);
         }
     }

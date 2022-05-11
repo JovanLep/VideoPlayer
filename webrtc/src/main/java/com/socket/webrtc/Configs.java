@@ -7,7 +7,7 @@ public class Configs {
     public static final int STREAM_AUDIO = 0;
     public static final int STREAM_VIDEO = 1;
 
-    public static final int PORT = 7007;
+    public static final int PORT = 7010;
 
     public static final int width = 1080;
     public static final int height = 1920;
@@ -24,8 +24,6 @@ public class Configs {
 
     //采样率
     public static final int SAMPLE_RATE_INHZ = 44100;
-
-    public static final int SAMPLE_RATE_16000 = 16000;
     //声道数  双通道
     public static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
 
